@@ -1,0 +1,6 @@
+@Pomponet_HostAddress = http://localhost:5293
+
+GET {{Pomponet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

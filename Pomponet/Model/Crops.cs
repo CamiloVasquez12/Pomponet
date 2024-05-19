@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+namespace Pomponet.Model
+{
+    public class Crops
+    {
+        [Key]
+        public int Id_Crop { get; set; }
+        public required int Crop_Number { get; set; }
+        public required int Id_Player { get; set; }
+        public Players? Players {  get; set; }
+        public bool Deleted { get; set; }
+    }
+}

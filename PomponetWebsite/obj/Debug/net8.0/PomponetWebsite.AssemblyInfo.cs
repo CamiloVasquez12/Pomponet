@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PomponetWebsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57b336472ad4056330ce159d246eb18633fb55ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb9e203fa03dcc59438fd18496dcac8cdc3c768b")]
 [assembly: System.Reflection.AssemblyProductAttribute("PomponetWebsite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PomponetWebsite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

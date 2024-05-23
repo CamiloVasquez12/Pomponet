@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PomponetWebsite.Context;
 using PomponetWebsite.Models;
 
@@ -20,10 +21,36 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Crops
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? buscar, string filtro)
         {
-            var cropList = await _context.Crop.Where(c => !c.Deleted).ToListAsync();
-            return View(cropList);
+            var crops = from crop in _context.Crop select crop;
+
+            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            {
+                string buscarStr = buscar.Value.ToString();
+                crops = crops.Where(s => s.Crop_Number.ToString().Contains(buscarStr));
+            }
+
+            ViewData["FiltroCrop_Number"] = String.IsNullOrEmpty(filtro) ? "Crop_NumberDescendente" : "";
+            ViewData["FiltroId_Player"] = filtro == "Id_PlayerAscendente" ? "Id_PlayerDescendente" : "Id_PlayerAscendente";
+
+            switch (filtro)
+            {
+                case "Crop_NumberDescendente":
+                    crops = crops.OrderByDescending(crop => crop.Crop_Number);
+                    break;
+                case "Id_PlayerDescendente":
+                    crops = crops.OrderByDescending(crop => crop.Id_Player);
+                    break;
+                case "Id_PlayerAscendente":
+                    crops = crops.OrderBy(crop => crop.Id_Player);
+                    break;
+                default:
+                    crops = crops.OrderBy(crop => crop.Crop_Number);
+                    break;
+            }
+
+            return View(await crops.ToListAsync());
         }
 
         // GET: Crops/Details/5
@@ -138,19 +165,20 @@ namespace PomponetWebsite.Controllers
         // POST: Crops/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var crop = await _context.Crop.FindAsync(id);
-            if (crop != null)
-            {
-                crop.Deleted = true; // Marca el registro como eliminado
-                _context.Crop.Update(crop); // Actualiza el registro en el contexto
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			var crop = await _context.Crop.FindAsync(id);
+			if (crop!= null)
+			{
+				crop.Deleted = true; // Marca el registro como eliminado
+				_context.Crop.Update(crop); // Actualiza el registro en el contexto
+			}
 
-        private bool CropsExists(int id)
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool CropsExists(int id)
         {
             return _context.Crop.Any(e => e.Id_Crop == id);
         }

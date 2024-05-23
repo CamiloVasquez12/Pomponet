@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0ATotW6f/tB++E3rHnb6V/PU/Uc+6R3+Stt2FZQIU0fThT55nrQ0nN1BdBsBh7cGDO7N7OCk8Gtn7eXfU4RdZQ==",
+  "dgSpecHash": "tGCx4PUqeaPQXstSBhMjPgNyyfm6SW4sW4eopoFlQGwiJXlIEG0P3oQLANv+LvFjhsaZg+M2/p6dnUEsGHeREQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vasqu\\source\\Pomponet\\Pomponet\\Pomponet.csproj",
+  "projectFilePath": "C:\\Users\\vasqu\\source\\Nueva carpeta\\Pomponet\\Pomponet\\Pomponet\\Pomponet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vasqu\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\vasqu\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

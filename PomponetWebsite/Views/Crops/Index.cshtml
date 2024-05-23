@@ -4,19 +4,33 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List Crops</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
+<form asp-controller="Crops" asp-action="Index" method="get">
+    <p>
+        Buscar: <input type="text" name="buscar" class="form-text" />
+        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
+        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
+        {
+            <span class="text-danger">@ViewData["Error"]</span>
+        }
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Crop_Number)
+                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroCrop_Number"]">
+                    @Html.DisplayNameFor(model => model.Crop_Number)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id_Player)
+                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Player"]">
+                    @Html.DisplayNameFor(model => model.Id_Player)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)

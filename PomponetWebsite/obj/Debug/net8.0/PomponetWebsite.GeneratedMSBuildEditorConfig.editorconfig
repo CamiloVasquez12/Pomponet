@@ -17,87 +17,367 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PomponetWebsite
 build_property.RootNamespace = PomponetWebsite
-build_property.ProjectDir = C:\Users\vasqu\source\Pomponet\PomponetWebsite\
+build_property.ProjectDir = C:\Users\vasqu\source\Nueva carpeta\Pomponet\Pomponet\PomponetWebsite\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\vasqu\source\Pomponet\PomponetWebsite
+build_property.MSBuildProjectDirectory = C:\Users\vasqu\source\Nueva carpeta\Pomponet\Pomponet\PomponetWebsite
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Acceso/Login.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Acceso/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNvXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Acceso/Registrarse.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Acceso/Registrarse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNvXFJlZ2lzdHJhcnNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Crops/Create.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Achievements/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Achievements/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Achievements/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Achievements/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Achievements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/AplicationTools/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBsaWNhdGlvblRvb2xzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/AplicationTools/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBsaWNhdGlvblRvb2xzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/AplicationTools/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBsaWNhdGlvblRvb2xzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/AplicationTools/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBsaWNhdGlvblRvb2xzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/AplicationTools/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBsaWNhdGlvblRvb2xzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Crops/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JvcHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Crops/Delete.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Crops/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JvcHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Crops/Details.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Crops/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JvcHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Crops/Edit.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Crops/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JvcHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Crops/Index.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Crops/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JvcHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Home/Index.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Epps/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBwc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Epps/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBwc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Epps/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBwc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Epps/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBwc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Epps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBwc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicides/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicides/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicides/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicides/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicides/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicide_X_Pompon_Part/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlX1hfUG9tcG9uX1BhcnRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicide_X_Pompon_Part/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlX1hfUG9tcG9uX1BhcnRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicide_X_Pompon_Part/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlX1hfUG9tcG9uX1BhcnRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicide_X_Pompon_Part/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlX1hfUG9tcG9uX1BhcnRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Fungicide_X_Pompon_Part/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuZ2ljaWRlX1hfUG9tcG9uX1BhcnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Home/Privacy.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/People/Create.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Inventories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3JpZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Inventories/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3JpZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Inventories/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3JpZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Inventories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3JpZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Inventories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3JpZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Money/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uZXlcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Money/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uZXlcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Money/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uZXlcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Money/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uZXlcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Money/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uZXlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/People/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVvcGxlXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/People/Delete.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/People/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVvcGxlXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/People/Details.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/People/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVvcGxlXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/People/Edit.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/People/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVvcGxlXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/People/Index.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/People/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVvcGxlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Shared/Error.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pests/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pests/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pests/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pests/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pests/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pest_X_Fungicide/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdF9YX0Z1bmdpY2lkZVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pest_X_Fungicide/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdF9YX0Z1bmdpY2lkZVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pest_X_Fungicide/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdF9YX0Z1bmdpY2lkZVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pest_X_Fungicide/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdF9YX0Z1bmdpY2lkZVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pest_X_Fungicide/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzdF9YX0Z1bmdpY2lkZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Players/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Players/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Players/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Players/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Players/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Player_Achievements/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyX0FjaGlldmVtZW50c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Player_Achievements/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyX0FjaGlldmVtZW50c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Player_Achievements/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyX0FjaGlldmVtZW50c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Player_Achievements/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyX0FjaGlldmVtZW50c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Player_Achievements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWVyX0FjaGlldmVtZW50c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pompon_Parts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9tcG9uX1BhcnRzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pompon_Parts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9tcG9uX1BhcnRzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pompon_Parts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9tcG9uX1BhcnRzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pompon_Parts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9tcG9uX1BhcnRzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Pompon_Parts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9tcG9uX1BhcnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Sensors/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vuc29yc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Sensors/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vuc29yc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Sensors/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vuc29yc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Sensors/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vuc29yc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Sensors/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vuc29yc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/_ViewImports.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Types_Fungicides/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwZXNfRnVuZ2ljaWRlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Types_Fungicides/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwZXNfRnVuZ2ljaWRlc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Types_Fungicides/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwZXNfRnVuZ2ljaWRlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Types_Fungicides/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwZXNfRnVuZ2ljaWRlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Types_Fungicides/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwZXNfRnVuZ2ljaWRlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/_ViewStart.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/vasqu/source/Pomponet/PomponetWebsite/Views/Shared/_Layout.cshtml]
+[C:/Users/vasqu/source/Nueva carpeta/Pomponet/Pomponet/PomponetWebsite/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-p0o7t0v22e

@@ -19,15 +19,37 @@ namespace PomponetWebsite.Controllers
             _context = context;
         }
 
-        // GET: People
-        public async Task<IActionResult> Index()
-        {
-            var peopleList = await _context.People.Where(p => !p.Deleted).ToListAsync();
-            return View(peopleList);
-        }
+		// GET: People
+		public async Task<IActionResult> Index(string buscar,string filtro)
+		{
+            var people = from person in _context.People select person;
+            if(!String.IsNullOrEmpty(buscar))
+            {
+                people = people.Where(s => s.Names!.Contains(buscar));
+            }
+            ViewData["FiltroNombre"] = String.IsNullOrEmpty(filtro) ? "NombreDescendente" : "";
+			ViewData["FiltroEdad"] = filtro=="AñoAscendente" ? "AñoDescendente" : "AñoAscendente";
 
-        // GET: People/Details/5
-        public async Task<IActionResult> Details(int? id)
+			switch (filtro)
+            {
+                case "NombreDescendente":
+					people = people.OrderByDescending(people => people.Names);
+                    break;
+				case "AñoDescendente":
+					people = people.OrderByDescending(people => people.Age);
+					break;
+                case "AñoAscendente":
+                    people = people.OrderBy(people => people.Age);
+                    break;
+                default:
+					people = people.OrderBy(people => people.Names);
+					break;
+            }
+			return View(await people.ToListAsync());
+		}
+
+		// GET: People/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -138,18 +160,20 @@ namespace PomponetWebsite.Controllers
         // POST: People/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var people = await _context.People.FindAsync(id);
-            if (people != null)
-            {
-                people.Deleted = true; // Marca el registro como eliminado
-                _context.People.Update(people); // Actualiza el registro en el contexto
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        private bool PeopleExists(int id)
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			var people = await _context.People.FindAsync(id);
+			if (people != null)
+			{
+				people.Deleted = true; // Marca el registro como eliminado
+				_context.People.Update(people); // Actualiza el registro en el contexto
+			}
+
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool PeopleExists(int id)
         {
             return _context.People.Any(e => e.Id_Person == id);
         }

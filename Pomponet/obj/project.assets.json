@@ -4538,11 +4538,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vasqu\\source\\Pomponet\\Pomponet\\Pomponet.csproj",
+      "projectUniqueName": "C:\\Users\\vasqu\\source\\Nueva carpeta\\Pomponet\\Pomponet\\Pomponet\\Pomponet.csproj",
       "projectName": "Pomponet",
-      "projectPath": "C:\\Users\\vasqu\\source\\Pomponet\\Pomponet\\Pomponet.csproj",
+      "projectPath": "C:\\Users\\vasqu\\source\\Nueva carpeta\\Pomponet\\Pomponet\\Pomponet\\Pomponet.csproj",
       "packagesPath": "C:\\Users\\vasqu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vasqu\\source\\Pomponet\\Pomponet\\obj\\",
+      "outputPath": "C:\\Users\\vasqu\\source\\Nueva carpeta\\Pomponet\\Pomponet\\Pomponet\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

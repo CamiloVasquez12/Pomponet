@@ -3,10 +3,18 @@
 	Layout = null;
 }
 <html>
-	<head>
-		<title>Registrarse</title>
+<head>
+	<title>Registrarse</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	</head>
+	<style>
+		body {
+			background-image: url('/css/fondo.jpeg');
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
+
+</head>
 	<body>
 	<div class ="row mt-5 justify-content-center">
 		<div class="col-sm-4">
@@ -15,7 +23,6 @@
 					Registrarse
 				</div>
 				<div class="card-body">
-
 					<form asp-controller="Acceso"asp-action="Registrarse"method="post">
 						<input class="form-control mb-3" type="text" placeholder="Nombre" required asp-for="Names" />
 						<input class="form-control mb-3" type="email" placeholder="Correo" required asp-for="Email" />

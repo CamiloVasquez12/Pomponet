@@ -14,6 +14,6 @@
     <WebStackScaffolding_DbContextTypeFullName>PomponetWebsite.Context.CropsDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
-    <NameOfLastUsedPublishProfile>C:\Users\vasqu\source\repos\Pomponet\PomponetWebsite\Properties\PublishProfiles\Pomponet - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\vasqu\source\Nueva carpeta\Pomponet\Pomponet\PomponetWebsite\Properties\PublishProfiles\Pomponet - FTP.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

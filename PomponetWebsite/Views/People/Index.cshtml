@@ -4,16 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List People</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
+
+<form asp-controller="People" asp-action="Index">
+    <p>
+        Buscar: <input type="text" name="buscar" class="form-text" />
+        <input type="submit" value="Buscar" class="btn btn-sm btn-dark"/>
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Names)
+                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroNombre"]">
+                    @Html.DisplayNameFor(model => model.Names)
+                </a>
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -25,7 +35,9 @@
                 @Html.DisplayNameFor(model => model.Password)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Age)
+                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroEdad"]">
+                    @Html.DisplayNameFor(model => model.Age)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)

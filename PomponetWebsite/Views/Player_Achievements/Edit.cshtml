@@ -1,0 +1,49 @@
+﻿@model PomponetWebsite.Models.Player_Achievements
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Player_Achievements</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id_Player_Achievement" />
+            <div class="form-group">
+                <label asp-for="Id_Achievement" class="control-label"></label>
+                <input asp-for="Id_Achievement" class="form-control" />
+                <span asp-validation-for="Id_Achievement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Logros_Totales" class="control-label"></label>
+                <input asp-for="Logros_Totales" class="form-control" />
+                <span asp-validation-for="Logros_Totales" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Player" class="control-label"></label>
+                <input asp-for="Id_Player" class="form-control" />
+                <span asp-validation-for="Id_Player" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Deleted" /> @Html.DisplayNameFor(model => model.Deleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

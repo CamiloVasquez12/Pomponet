@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,40 +20,38 @@ namespace PomponetWebsite.Controllers
             _context = context;
         }
 
-        // GET: Moneys
-        public async Task<IActionResult> Index(int? buscar, string filtro)
+        // GET: Money
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var money = from mone in _context.Money select mone;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["PlayerSortParm"] = string.IsNullOrEmpty(sortOrder) ? "player_desc" : "";
+            ViewData["QuantitySortParm"] = sortOrder == "quantity" ? "quantity_desc" : "quantity";
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            var query = _context.Money
+                                .Include(f => f.Players)
+                                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                string buscarStr = buscar.Value.ToString();
-                money = money.Where(s => s.Quantity.ToString().Contains(buscarStr));
+                if (int.TryParse(searchString, out int searchScore))
+                {
+                    query = query.Where(f => f.Players.Score == searchScore);
+                }
             }
 
-            ViewData["FiltroQuantity"] = String.IsNullOrEmpty(filtro) ? "QuantityDescendente" : "";
-            ViewData["FiltroId_Player"] = filtro == "Id_PlayerAscendente" ? "Id_PlayerDescendente" : "Id_PlayerAscendente";
-
-            switch (filtro)
+            query = sortOrder switch
             {
-                case "QuantityDescendente":
-                    money = money.OrderByDescending(mone => mone.Quantity);
-                    break;
-                case "Id_PlayerDescendente":
-                    money = money.OrderByDescending(mone => mone.Id_Player);
-                    break;
-                case "Id_PlayerAscendente":
-                    money = money.OrderBy(mone => mone.Id_Player);
-                    break;
-                default:
-                    money = money.OrderBy(mone => mone.Quantity);
-                    break;
-            }
+                "player_desc" => query.OrderByDescending(f => f.Players.Score),
+                "quantity_desc" => query.OrderByDescending(f => f.Quantity),
+                "quantity" => query.OrderBy(f => f.Quantity),
+                _ => query.OrderBy(f => f.Players.Score)
+            };
 
-            return View(await money.ToListAsync());
+            var model = await query.ToListAsync();
+            return View(model);
         }
 
-        // GET: Moneys/Details/5
+        // GET: Money/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -70,15 +69,22 @@ namespace PomponetWebsite.Controllers
             return View(money);
         }
 
-        // GET: Moneys/Create
-        public IActionResult Create()
+        // GET: Money/Create
+        // GET: Money/Create
+        public async Task<IActionResult> Create()
         {
+            var players = await _context.Players.ToListAsync();
+
+            if (players == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Player"] = new SelectList(players, "Id_Player", "Score");
             return View();
         }
 
-        // POST: Moneys/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Money/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Money,Quantity,Id_Player,Deleted")] Money money)
@@ -89,10 +95,19 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var players = await _context.Players.ToListAsync();
+
+            if (players == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Player"] = new SelectList(players, "Id_Player", "Score", money.Id_Player);
             return View(money);
         }
 
-        // GET: Moneys/Edit/5
+        // GET: Money/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -105,12 +120,12 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["Id_Player"] = new SelectList(_context.Players, "Id_Player", "Score", money.Id_Player);
             return View(money);
         }
 
-        // POST: Moneys/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Money/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Money,Quantity,Id_Player,Deleted")] Money money)
@@ -140,10 +155,17 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Id_Player"] = new SelectList(_context.Players, "Id_Player", "Score", money.Id_Player);
             return View(money);
         }
 
-        // GET: Moneys/Delete/5
+        private bool MoneyExists(int id)
+        {
+            return _context.Money.Any(e => e.Id_Money == id);
+        }
+
+        // GET: Money/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,23 +183,23 @@ namespace PomponetWebsite.Controllers
             return View(money);
         }
 
-        // POST: Moneys/Delete/5
+        // POST: Money/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mone = await _context.Money.FindAsync(id);
-            if (mone != null)
+            var money = await _context.Money.FindAsync(id);
+            if (money != null)
             {
-                mone.Deleted = true; // Marca el registro como eliminado
-                _context.Money.Update(mone); // Actualiza el registro en el contexto
+                money.Deleted = true;
+                _context.Money.Update(money);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MoneyExists(int id)
+        private bool Fungicide_X_Pompon_PartExists(int id)
         {
             return _context.Money.Any(e => e.Id_Money == id);
         }

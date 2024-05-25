@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,36 +21,34 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Player_Achievements
-        public async Task<IActionResult> Index(int? buscar, string filtro)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var player_achievements = from player_achievement in _context.Player_Achievements select player_achievement;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["AchievementSortParm"] = sortOrder == "achievement" ? "achievement_desc" : "achievement";
+            ViewData["PlayerSortParm"] = sortOrder == "player" ? "player_desc" : "player";
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            var query = _context.Player_Achievements
+                                .Include(f => f.Achievements)
+                                .Include(f => f.Players)
+                                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                string buscarStr = buscar.Value.ToString();
-                player_achievements = player_achievements.Where(s => s.Id_Achievement.ToString().Contains(buscarStr));
+                query = query.Where(f => f.Achievements.Achievement.Contains(searchString) ||
+                                         f.Players.Score.ToString().Contains(searchString));
             }
 
-            ViewData["FiltroId_Achievement"] = String.IsNullOrEmpty(filtro) ? "Id_AchievementDescendente" : "";
-            ViewData["FiltroLogros_Totales"] = filtro == "Logros_TotalesAscendente" ? "Logros_TotalesDescendente" : "Logros_TotalesAscendente";
-
-            switch (filtro)
+            query = sortOrder switch
             {
-                case "Id_AchievementDescendente":
-                    player_achievements = player_achievements.OrderByDescending(player_achievement => player_achievement.Id_Achievement);
-                    break;
-                case "Logros_TotalesDescendente":
-                    player_achievements = player_achievements.OrderByDescending(player_achievement => player_achievement.Logros_Totales);
-                    break;
-                case "Logros_TotalesAscendente":
-                    player_achievements = player_achievements.OrderBy(player_achievement => player_achievement.Logros_Totales);
-                    break;
-                default:
-                    player_achievements = player_achievements.OrderBy(player_achievement => player_achievement.Id_Achievement);
-                    break;
-            }
+                "achievement_desc" => query.OrderByDescending(f => f.Achievements.Achievement),
+                "player_desc" => query.OrderByDescending(f => f.Players.Score),
+                "achievement" => query.OrderBy(f => f.Achievements.Achievement),
+                "player" => query.OrderBy(f => f.Players.Score),
+                _ => query.OrderBy(f => f.Achievements.Achievement)
+            };
 
-            return View(await player_achievements.ToListAsync());
+            var model = await query.ToListAsync();
+            return View(model);
         }
 
         // GET: Player_Achievements/Details/5
@@ -60,36 +59,46 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var player_Achievements = await _context.Player_Achievements
+            var player_achievements = await _context.Player_Achievements
+                .Include(p => p.Achievements)
+                .Include(p => p.Players)
                 .FirstOrDefaultAsync(m => m.Id_Player_Achievement == id);
-            if (player_Achievements == null)
+            if (player_achievements == null)
             {
                 return NotFound();
             }
 
-            return View(player_Achievements);
+            return View(player_achievements);
         }
 
         // GET: Player_Achievements/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var achievements = await _context.Achievements.ToListAsync();
+            var players = await _context.Players.ToListAsync();
+
+            ViewData["Id_Achievement"] = new SelectList(achievements, "Id_Achievement", "Achievement");
+            ViewData["Id_Player"] = new SelectList(players, "Id_Player", "Score");
             return View();
         }
 
         // POST: Player_Achievements/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Player_Achievement,Id_Achievement,Id_Player,Logros_Totales,Deleted")] Player_Achievements player_Achievements)
+        public async Task<IActionResult> Create([Bind("Id_Player_Achievement,Id_Achievement,Logros_Totales,Id_Player,Deleted")] Player_Achievements player_achievements)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(player_Achievements);
+                _context.Add(player_achievements);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(player_Achievements);
+
+            var achievements = await _context.Achievements.ToListAsync();
+            var players = await _context.Players.ToListAsync();
+            ViewData["Id_Achievement"] = new SelectList(achievements, "Id_Achievement", "Achievement", player_achievements.Id_Achievement);
+            ViewData["Id_Player"] = new SelectList(players, "Id_Player", "Score", player_achievements.Id_Player);
+            return View(player_achievements);
         }
 
         // GET: Player_Achievements/Edit/5
@@ -100,22 +109,22 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var player_Achievements = await _context.Player_Achievements.FindAsync(id);
-            if (player_Achievements == null)
+            var player_achievements = await _context.Player_Achievements.FindAsync(id);
+            if (player_achievements == null)
             {
                 return NotFound();
             }
-            return View(player_Achievements);
+            ViewData["Id_Achievement"] = new SelectList(_context.Achievements, "Id_Achievement", "Achievement", player_achievements.Id_Achievement);
+            ViewData["Id_Player"] = new SelectList(_context.Players, "Id_Player", "Score", player_achievements.Id_Player);
+            return View(player_achievements);
         }
 
         // POST: Player_Achievements/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Player_Achievement,Id_Achievement,Logros_Totales,Id_Player,Deleted")] Player_Achievements player_Achievements)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Player_Achievement,Id_Achievement,Logros_Totales,Id_Player,Deleted")] Player_Achievements player_achievements)
         {
-            if (id != player_Achievements.Id_Player_Achievement)
+            if (id != player_achievements.Id_Player_Achievement)
             {
                 return NotFound();
             }
@@ -124,12 +133,12 @@ namespace PomponetWebsite.Controllers
             {
                 try
                 {
-                    _context.Update(player_Achievements);
+                    _context.Update(player_achievements);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Player_AchievementsExists(player_Achievements.Id_Player_Achievement))
+                    if (!Player_AchievementsExists(player_achievements.Id_Player_Achievement))
                     {
                         return NotFound();
                     }
@@ -140,7 +149,14 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(player_Achievements);
+            ViewData["Id_Achievement"] = new SelectList(_context.Achievements, "Id_Achievement", "Achievement", player_achievements.Id_Achievement);
+            ViewData["Id_Player"] = new SelectList(_context.Players, "Id_Player", "Score", player_achievements.Id_Player);
+            return View(player_achievements);
+        }
+
+        private bool Player_AchievementsExists(int id)
+        {
+            return _context.Player_Achievements.Any(e => e.Id_Player_Achievement == id);
         }
 
         // GET: Player_Achievements/Delete/5
@@ -151,14 +167,16 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var player_Achievements = await _context.Player_Achievements
+            var player_achievements = await _context.Player_Achievements
+                .Include(p => p.Achievements)
+                .Include(p => p.Players)
                 .FirstOrDefaultAsync(m => m.Id_Player_Achievement == id);
-            if (player_Achievements == null)
+            if (player_achievements == null)
             {
                 return NotFound();
             }
 
-            return View(player_Achievements);
+            return View(player_achievements);
         }
 
         // POST: Player_Achievements/Delete/5
@@ -166,20 +184,15 @@ namespace PomponetWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var player_achievement = await _context.Player_Achievements.FindAsync(id);
-            if (player_achievement != null)
+            var player_achievements = await _context.Player_Achievements.FindAsync(id);
+            if (player_achievements != null)
             {
-                player_achievement.Deleted = true; // Marca el registro como eliminado
-                _context.Player_Achievements.Update(player_achievement); // Actualiza el registro en el contexto
+                player_achievements.Deleted = true;
+                _context.Player_Achievements.Update(player_achievements);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool Player_AchievementsExists(int id)
-        {
-            return _context.Player_Achievements.Any(e => e.Id_Player_Achievement == id);
         }
     }
 }

@@ -13,7 +13,9 @@ namespace PomponetWebsite.Models
         public Crops()
         {
             Fungicides = new List<Fungicides>();
+            Sensors = new List<Sensors>();
         }
+        public ICollection<Sensors> Sensors { get; set; }
     }
 }
 

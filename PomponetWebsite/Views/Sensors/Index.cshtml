@@ -10,30 +10,26 @@
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 
-<form asp-controller="Sensors" asp-action="Index">
-    <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
-        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-    </p>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-text" placeholder="Search..." />
+        <input type="submit" value="Search" class="btn btn-sm btn-dark" />
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroSensor"]">
-                    @Html.DisplayNameFor(model => model.Sensor)
-                </a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CropSortParm"]">Crop Number</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroPrice"]">
-                    @Html.DisplayNameFor(model => model.Price)
-                </a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SensorSortParm"]">Sensor</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => Model.First().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id_crop)
+                @Html.DisplayNameFor(model => Model.First().Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)
@@ -42,29 +38,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sensor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_crop)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Crops.Crop_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sensor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+                <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id_Sensor">Edit</a> |
                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id_Sensor">Details</a> |
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id_Sensor">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

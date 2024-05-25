@@ -9,27 +9,23 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<form asp-controller="Pest_X_Fungicide" asp-action="Index" method="get">
-    <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
-        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
-        {
-            <span class="text-danger">@ViewData["Error"]</span>
-        }
-    </p>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-text" placeholder="Search..." />
+        <input type="submit" value="Search" class="btn btn-sm btn-dark" />
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Pest"]">
-                    @Html.DisplayNameFor(model => model.Id_Pest)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PestSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().Pests.Pest)
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Fungicide"]">
-                    @Html.DisplayNameFor(model => model.Id_Fungicide)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["FungicideSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().Fungicides.Name_Fungicide)
                 </a>
             </th>
             <th>
@@ -42,10 +38,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Pest)
+                @Html.DisplayFor(modelItem => item.Pests.Pest)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Fungicide)
+                @Html.DisplayFor(modelItem => item.Fungicides.Name_Fungicide)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Deleted)

@@ -9,27 +9,21 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<form asp-controller="Money" asp-action="Index" method="get">
-    <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
-        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
-        {
-            <span class="text-danger">@ViewData["Error"]</span>
-        }
-    </p>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-text" placeholder="Search..." />
+        <input type="submit" value="Search" class="btn btn-sm btn-dark" />
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroQuantity"]">
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParm"]">Quantity</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Player"]">
-                    @Html.DisplayNameFor(model => model.Id_Player)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PlayerSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().Players.Score)
                 </a>
             </th>
             <th>
@@ -45,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Player)
+                @Html.DisplayFor(modelItem => item.Players.Score)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Deleted)

@@ -15,6 +15,8 @@ namespace PomponetWebsite.Models
         public People()
         {
             Inventories = new List<Inventories>();
+            Players = new List<Players>();
         }
+        public ICollection<Players> Players { get; set; }
     }
 }

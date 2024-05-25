@@ -7,5 +7,10 @@ namespace PomponetWebsite.Models
         public int Id_Achievement { get; set; }
         public required string Achievement { get; set; }
         public bool Deleted { get; set; }
+        public ICollection<Player_Achievements> Player_Achievements { get; set; }
+        public Achievements()
+        {
+            Player_Achievements = new List<Player_Achievements>();
+        }
     }
 }

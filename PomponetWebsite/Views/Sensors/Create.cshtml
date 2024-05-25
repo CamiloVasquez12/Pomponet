@@ -1,17 +1,16 @@
 ﻿@model PomponetWebsite.Models.Sensors
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Sensor";
 }
 
-<h1>Create</h1>
+<h1>Create Sensor</h1>
 
 <h4>Sensors</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Sensor" class="control-label"></label>
                 <input asp-for="Sensor" class="form-control" />
@@ -29,13 +28,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Id_crop" class="control-label"></label>
-                <input asp-for="Id_crop" class="form-control" />
+                <select asp-for="Id_crop" class="form-control" asp-items="ViewBag.Id_crop"></select>
                 <span asp-validation-for="Id_crop" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Deleted" /> @Html.DisplayNameFor(model => model.Deleted)
-                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -49,5 +43,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

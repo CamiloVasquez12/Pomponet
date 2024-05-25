@@ -15,6 +15,10 @@ namespace PomponetWebsite.Models
         public Fungicides()
         {
             Fungicide_X_Pompon_Parts = new List<Fungicide_X_Pompon_Part>();
+            Pest_X_Fungicide = new List<Pest_X_Fungicide>();
+            Types_Fungicides = new List<Types_Fungicides>();
         }
+        public ICollection<Pest_X_Fungicide> Pest_X_Fungicide { get; set; }
+        public ICollection<Types_Fungicides> Types_Fungicides { get; set; }
     }
 }

@@ -53,6 +53,38 @@ namespace PomponetWebsite.Context
               .HasMany(e => e.Inventories)
               .WithOne(f => f.Epps)
               .HasForeignKey(f => f.Id_Epp);
+            modelBuilder.Entity<Players>()
+              .HasMany(p => p.Money)
+              .WithOne(f => f.Players)
+              .HasForeignKey(f => f.Id_Player);
+            modelBuilder.Entity<Pests>()
+              .HasMany(p => p.Pest_X_Fungicide)
+              .WithOne(f => f.Pests)
+              .HasForeignKey(f => f.Id_Pest);
+            modelBuilder.Entity<Fungicides>()
+                .HasMany(f => f.Pest_X_Fungicide)
+                .WithOne(p => p.Fungicides)
+                .HasForeignKey(f => f.Id_Fungicide);
+            modelBuilder.Entity<Achievements>()
+              .HasMany(a => a.Player_Achievements)
+              .WithOne(f => f.Achievements)
+              .HasForeignKey(f => f.Id_Achievement);
+            modelBuilder.Entity<Players>()
+              .HasMany(p => p.Player_Achievements)
+              .WithOne(f => f.Players)
+              .HasForeignKey(f => f.Id_Player);
+            modelBuilder.Entity<People>()
+              .HasMany(p => p.Players)
+              .WithOne(f => f.People)
+              .HasForeignKey(f => f.Id_Person);
+            modelBuilder.Entity<Crops>()
+               .HasMany(c => c.Sensors)
+               .WithOne(f => f.Crops)
+               .HasForeignKey(f => f.Id_crop);
+            modelBuilder.Entity<Fungicides>()
+                .HasMany(f => f.Types_Fungicides)
+                .WithOne(p => p.Fungicides)
+                .HasForeignKey(f => f.Id_Funicides);
         }
 
         public DbSet<Crops> Crop { get; set; }

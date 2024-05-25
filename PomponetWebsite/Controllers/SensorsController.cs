@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,32 +19,28 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Sensors
-        public async Task<IActionResult> Index(string buscar, string filtro)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var sensors = from sensor in _context.Sensors select sensor;
-            if (!String.IsNullOrEmpty(buscar))
-            {
-                sensors = sensors.Where(s => s.Sensor!.Contains(buscar));
-            }
-            ViewData["FiltroSensor"] = String.IsNullOrEmpty(filtro) ? "SensorDescendente" : "";
-            ViewData["FiltroPrice"] = filtro == "PriceAscendente" ? "PriceDescendente" : "PriceAscendente";
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CropSortParm"] = string.IsNullOrEmpty(sortOrder) ? "crop_desc" : "crop_asc";
+            ViewData["SensorSortParm"] = sortOrder == "sensor_asc" ? "sensor_desc" : "sensor_asc";
 
-            switch (filtro)
+            var query = _context.Sensors.Include(s => s.Crops).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                case "SensorDescendente":
-                    sensors = sensors.OrderByDescending(sensors => sensors.Sensor);
-                    break;
-                case "PriceDescendente":
-                    sensors = sensors.OrderByDescending(sensors => sensors.Price);
-                    break;
-                case "PriceAscendente":
-                    sensors = sensors.OrderBy(sensors => sensors.Price);
-                    break;
-                default:
-                    sensors = sensors.OrderBy(sensors => sensors.Sensor);
-                    break;
+                query = query.Where(s => s.Sensor.Contains(searchString) || s.Crops.Crop_Number.ToString().Contains(searchString));
             }
-            return View(await sensors.ToListAsync());
+
+            query = sortOrder switch
+            {
+                "crop_desc" => query.OrderByDescending(s => s.Crops.Crop_Number),
+                "sensor_asc" => query.OrderBy(s => s.Sensor),
+                "sensor_desc" => query.OrderByDescending(s => s.Sensor),
+                _ => query.OrderBy(s => s.Crops.Crop_Number),
+            };
+
+            return View(await query.ToListAsync());
         }
 
         // GET: Sensors/Details/5
@@ -56,25 +51,23 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var sensors = await _context.Sensors
-                .FirstOrDefaultAsync(m => m.Id_Sensor == id);
-            if (sensors == null)
+            var sensor = await _context.Sensors.Include(s => s.Crops).FirstOrDefaultAsync(m => m.Id_Sensor == id);
+            if (sensor == null)
             {
                 return NotFound();
             }
 
-            return View(sensors);
+            return View(sensor);
         }
 
         // GET: Sensors/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Id_crop"] = new SelectList(await _context.Crop.ToListAsync(), "Id_Crop", "Crop_Number");
             return View();
         }
 
         // POST: Sensors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Sensor,Sensor,Price,Description,Id_crop,Deleted")] Sensors sensors)
@@ -85,6 +78,7 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_crop"] = new SelectList(await _context.Crop.ToListAsync(), "Id_Crop", "Crop_Number", sensors.Id_crop);
             return View(sensors);
         }
 
@@ -101,12 +95,11 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
+            ViewData["Id_crop"] = new SelectList(await _context.Crop.ToListAsync(), "Id_Crop", "Crop_Number", sensors.Id_crop);
             return View(sensors);
         }
 
         // POST: Sensors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Sensor,Sensor,Price,Description,Id_crop,Deleted")] Sensors sensors)
@@ -136,6 +129,7 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_crop"] = new SelectList(await _context.Crop.ToListAsync(), "Id_Crop", "Crop_Number", sensors.Id_crop);
             return View(sensors);
         }
 
@@ -147,8 +141,7 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var sensors = await _context.Sensors
-                .FirstOrDefaultAsync(m => m.Id_Sensor == id);
+            var sensors = await _context.Sensors.Include(s => s.Crops).FirstOrDefaultAsync(m => m.Id_Sensor == id);
             if (sensors == null)
             {
                 return NotFound();
@@ -165,11 +158,10 @@ namespace PomponetWebsite.Controllers
             var sensors = await _context.Sensors.FindAsync(id);
             if (sensors != null)
             {
-                sensors.Deleted = true; // Marca el registro como eliminado
-                _context.Sensors.Update(sensors); // Actualiza el registro en el contexto
+                sensors.Deleted = true;
+                _context.Sensors.Update(sensors);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

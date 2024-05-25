@@ -10,17 +10,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id_Pest_X_Fungicide" />
             <div class="form-group">
                 <label asp-for="Id_Pest" class="control-label"></label>
-                <input asp-for="Id_Pest" class="form-control" />
+                <select asp-for="Id_Pest" class="form-control" asp-items="ViewBag.Id_Pest"></select>
                 <span asp-validation-for="Id_Pest" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Id_Fungicide" class="control-label"></label>
-                <input asp-for="Id_Fungicide" class="form-control" />
+                <select asp-for="Id_Fungicide" class="form-control" asp-items="ViewBag.Id_Fungicide"></select>
                 <span asp-validation-for="Id_Fungicide" class="text-danger"></span>
             </div>
             <div class="form-group form-check">

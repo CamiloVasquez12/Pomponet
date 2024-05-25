@@ -20,20 +20,22 @@ namespace PomponetWebsite.Controllers
         // GET: Pompon_Parts
         public async Task<IActionResult> Index(string buscar, string filtro)
         {
-            var pompon_parts = from pompon_part in _context.Pompon_Parts
-                               select pompon_part;
+            ViewData["FiltroPart"] = String.IsNullOrEmpty(filtro) ? "PartAscendente" : filtro;
+            ViewData["CurrentFilter"] = buscar;
+
+            var pompon_parts = _context.Pompon_Parts.AsQueryable();
 
             if (!String.IsNullOrEmpty(buscar))
             {
                 pompon_parts = pompon_parts.Where(s => s.Part.Contains(buscar));
             }
 
-            ViewData["FiltroPart"] = String.IsNullOrEmpty(filtro) ? "PartDescendente" : "";
             switch (filtro)
             {
                 case "PartDescendente":
                     pompon_parts = pompon_parts.OrderByDescending(p => p.Part);
                     break;
+                case "PartAscendente":
                 default:
                     pompon_parts = pompon_parts.OrderBy(p => p.Part);
                     break;
@@ -41,6 +43,7 @@ namespace PomponetWebsite.Controllers
 
             return View(await pompon_parts.ToListAsync());
         }
+
 
         // GET: Pompon_Parts/Details/5
         public async Task<IActionResult> Details(int? id)

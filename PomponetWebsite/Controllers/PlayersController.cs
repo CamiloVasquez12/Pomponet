@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,36 +21,31 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Players
-        public async Task<IActionResult> Index(int? buscar, string filtro)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var players = from player in _context.Players select player;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["ScoreSortParm"] = string.IsNullOrEmpty(sortOrder) ? "score_desc" : "";
+            ViewData["PersonSortParm"] = sortOrder == "person" ? "person_desc" : "person";
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            var query = _context.Players
+                                .Include(f => f.People)
+                                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                string buscarStr = buscar.Value.ToString();
-                players = players.Where(s => s.Id_Person.ToString().Contains(buscarStr));
+                query = query.Where(f => f.People.Names.Contains(searchString));
             }
 
-            ViewData["FiltroId_Person"] = String.IsNullOrEmpty(filtro) ? "Id_PersonDescendente" : "";
-            ViewData["FiltroScore"] = filtro == "ScoreAscendente" ? "ScoreADescendente" : "ScoreAscendente";
-
-            switch (filtro)
+            query = sortOrder switch
             {
-                case "Id_PersonDescendente":
-                    players = players.OrderByDescending(player => player.Id_Person);
-                    break;
-                case "ScoreADescendente":
-                    players = players.OrderByDescending(player => player.Score);
-                    break;
-                case "ScoreAscendente":
-                    players = players.OrderBy(player => player.Score);
-                    break;
-                default:
-                    players = players.OrderBy(player => player.Id_Person);
-                    break;
-            }
+                "person_desc" => query.OrderByDescending(f => f.People.Names),
+                "score" => query.OrderBy(f => f.Score),
+                "score_desc" => query.OrderByDescending(f => f.Score),
+                _ => query.OrderBy(f => f.People.Names),
+            };
 
-            return View(await players.ToListAsync());
+            var model = await query.ToListAsync();
+            return View(model);
         }
 
         // GET: Players/Details/5
@@ -71,14 +67,19 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Players/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var people = await _context.People.ToListAsync();
+            if (people == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Person"] = new SelectList(people, "Id_Person", "Names");
             return View();
         }
 
         // POST: Players/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Player,Score,Id_Person,Deleted")] Players players)
@@ -89,9 +90,18 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var people = await _context.People.ToListAsync();
+            if (people == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Person"] = new SelectList(people, "Id_Person", "Names", players.Id_Person);
             return View(players);
         }
 
+        // GET: Players/Edit/5
         // GET: Players/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -105,12 +115,12 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["Id_Person"] = new SelectList(_context.People, "Id_Person", "Names", players.Id_Person);
             return View(players);
         }
 
         // POST: Players/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Player,Score,Id_Person,Deleted")] Players players)
@@ -140,6 +150,8 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Id_Person"] = new SelectList(_context.People, "Id_Person", "Names", players.Id_Person);
             return View(players);
         }
 
@@ -166,16 +178,17 @@ namespace PomponetWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var player = await _context.Players.FindAsync(id);
-            if (player != null)
+            var players = await _context.Players.FindAsync(id);
+            if (players != null)
             {
-                player.Deleted = true; // Marca el registro como eliminado
-                _context.Players.Update(player); // Actualiza el registro en el contexto
+                players.Deleted = true;
+                _context.Players.Update(players);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         private bool PlayersExists(int id)
         {
             return _context.Players.Any(e => e.Id_Player == id);

@@ -11,7 +11,7 @@
 </p>
 <form asp-controller="Pompon_Parts" asp-action="Index" method="get">
     <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
+        Buscar: <input type="text" name="buscar" class="form-text" value="@ViewData["CurrentFilter"]" />
         <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
         @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
         {
@@ -23,7 +23,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().Part)
+                @* Adjust sorting link to toggle between ascending and descending order *@
+                @{
+                    string sortParam = ViewData["FiltroPart"].ToString() == "PartAscendente" ? "PartDescendente" : "PartAscendente";
+                }
+                <a asp-action="Index" asp-route-filtro="@sortParam">Part</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deleted)
             </th>
             <th></th>
         </tr>
@@ -34,6 +41,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Part)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
                 </td>
                 <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id_Pompon_Part">Edit</a> |

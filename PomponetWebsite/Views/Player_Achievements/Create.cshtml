@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id_Achievement" class="control-label"></label>
-                <input asp-for="Id_Achievement" class="form-control" />
+                <select asp-for="Id_Achievement" class="form-control" asp-items="ViewBag.Id_Achievement"></select>
                 <span asp-validation-for="Id_Achievement" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,13 +24,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Id_Player" class="control-label"></label>
-                <input asp-for="Id_Player" class="form-control" />
+                <select asp-for="Id_Player" class="form-control" asp-items="ViewBag.Id_Player"></select>
                 <span asp-validation-for="Id_Player" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Deleted" /> @Html.DisplayNameFor(model => model.Deleted)
-                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id_Inventory" />
             <div class="form-group">
@@ -20,17 +20,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Id_Person" class="control-label"></label>
-                <input asp-for="Id_Person" class="form-control" />
+                <select asp-for="Id_Person" class="form-control" asp-items="@(ViewData["Id_Person"] as SelectList)"></select>
                 <span asp-validation-for="Id_Person" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Id_Tool" class="control-label"></label>
-                <input asp-for="Id_Tool" class="form-control" />
+                <select asp-for="Id_Tool" class="form-control" asp-items="@(ViewData["Id_AplicationTool"] as SelectList)"></select>
                 <span asp-validation-for="Id_Tool" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Id_Epp" class="control-label"></label>
-                <input asp-for="Id_Epp" class="form-control" />
+                <select asp-for="Id_Epp" class="form-control" asp-items="@(ViewData["Id_Epp"] as SelectList)"></select>
                 <span asp-validation-for="Id_Epp" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -50,5 +50,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -4,19 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>List Crops</h1>
+<h2>List Crops</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<form asp-controller="Crops" asp-action="Index" method="get">
+
+<form asp-controller="Crops" asp-action="Index">
     <p>
         Buscar: <input type="text" name="buscar" class="form-text" />
         <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
-        {
-            <span class="text-danger">@ViewData["Error"]</span>
-        }
     </p>
 </form>
 <table class="table">
@@ -28,9 +25,7 @@
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Player"]">
-                    @Html.DisplayNameFor(model => model.Id_Player)
-                </a>
+                @Html.DisplayNameFor(model => model.Id_Player)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)
@@ -39,23 +34,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Crop_Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Player)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Crop_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id_Player)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+                <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id_Crop">Edit</a> |
                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id_Crop">Details</a> |
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id_Crop">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PomponetWebsite.Context;
 using PomponetWebsite.Models;
@@ -22,21 +20,25 @@ namespace PomponetWebsite.Controllers
         // GET: Pompon_Parts
         public async Task<IActionResult> Index(string buscar, string filtro)
         {
-            var pompon_parts = from pompon_part in _context.Pompon_Parts select pompon_part;
+            var pompon_parts = from pompon_part in _context.Pompon_Parts
+                               select pompon_part;
+
             if (!String.IsNullOrEmpty(buscar))
             {
-                pompon_parts = pompon_parts.Where(s => s.Part!.Contains(buscar));
+                pompon_parts = pompon_parts.Where(s => s.Part.Contains(buscar));
             }
+
             ViewData["FiltroPart"] = String.IsNullOrEmpty(filtro) ? "PartDescendente" : "";
             switch (filtro)
             {
                 case "PartDescendente":
-                    pompon_parts = pompon_parts.OrderByDescending(pompon_parts => pompon_parts.Part);
+                    pompon_parts = pompon_parts.OrderByDescending(p => p.Part);
                     break;
                 default:
-                    pompon_parts = pompon_parts.OrderBy(pompon_parts => pompon_parts.Part);
+                    pompon_parts = pompon_parts.OrderBy(p => p.Part);
                     break;
             }
+
             return View(await pompon_parts.ToListAsync());
         }
 
@@ -59,23 +61,30 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Pompon_Parts/Create
+        // GET: Pompon_Parts/Create
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Pompon_Parts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Pompon_Part,Part,Deleted")] Pompon_Parts pompon_Parts)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pompon_Parts);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(pompon_Parts);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it as needed
+                    Console.WriteLine($"Exception: {ex.Message}");
+                }
             }
             return View(pompon_Parts);
         }
@@ -97,8 +106,6 @@ namespace PomponetWebsite.Controllers
         }
 
         // POST: Pompon_Parts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Pompon_Part,Part,Deleted")] Pompon_Parts pompon_Parts)

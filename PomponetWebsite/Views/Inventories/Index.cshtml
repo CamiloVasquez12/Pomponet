@@ -10,33 +10,31 @@
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <form asp-controller="Inventories" asp-action="Index" method="get">
-    <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
-        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
-        {
-            <span class="text-danger">@ViewData["Error"]</span>
-        }
-    </p>
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-text" placeholder="Search..." />
+        <input type="submit" value="Search" class="btn btn-sm btn-dark" />
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroNumber_Inventorie"]">
-                    @Html.DisplayNameFor(model => model.Number_Inventorie)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NumberInventorieSortParm"]">Number_Inventorie</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PersonSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().People.Names)
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Person"]">
-                    @Html.DisplayNameFor(model => model.Id_Person)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ToolSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().Aplication_Tools.Tool)
                 </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id_Tool)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Epp)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EppSortParm"]">
+                    @Html.DisplayNameFor(model => model.First().Epps.Name_Epp)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)
@@ -51,13 +49,13 @@
                 @Html.DisplayFor(modelItem => item.Number_Inventorie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Person)
+                @Html.DisplayFor(modelItem => item.People.Names)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Tool)
+                @Html.DisplayFor(modelItem => item.Aplication_Tools.Tool)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Epp)
+                @Html.DisplayFor(modelItem => item.Epps.Name_Epp)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Deleted)

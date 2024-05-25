@@ -9,6 +9,11 @@ namespace PomponetWebsite.Models
         public required int Id_Player { get; set; }
         public Players? Players { get; set; }
         public bool Deleted { get; set; }
+        public ICollection<Fungicides> Fungicides { get; set; }
+        public Crops()
+        {
+            Fungicides = new List<Fungicides>();
+        }
     }
 }
 

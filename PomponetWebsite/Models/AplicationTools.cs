@@ -10,5 +10,10 @@ namespace PomponetWebsite.Models
         public required string Description { get; set; }
         public required int Price { get; set; }
         public bool Deleted { get; set; }
+        public ICollection<Inventories> Inventories { get; set; }
+        public AplicationTools()
+        {
+            Inventories = new List<Inventories>();
+        }
     }
 }

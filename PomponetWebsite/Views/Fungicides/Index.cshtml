@@ -10,30 +10,26 @@
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 
-<form asp-controller="Fungicides" asp-action="Index">
-    <p>
-        Buscar: <input type="text" name="buscar" class="form-text" />
-        <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
-    </p>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-text" placeholder="Search..." />
+        <input type="submit" value="Search" class="btn btn-sm btn-dark" />
+    </div>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroName_Fungicide"]">
-                    @Html.DisplayNameFor(model => model.Name_Fungicide)
-                </a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-searchString="@ViewData["CurrentFilter"]">Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["QuantitySortParm"]" asp-route-searchString="@ViewData["CurrentFilter"]">Quantity</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroId_Crop"]">
-                    @Html.DisplayNameFor(model => model.Id_crop)
-                </a>
+                @Html.DisplayNameFor(model => model.Crops.Crop_Number)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Deleted)
@@ -42,29 +38,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name_Fungicide)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_crop)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_Fungicide)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Crops.Crop_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deleted)
+                </td>
+                <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id_Fungicide">Edit</a> |
                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id_Fungicide">Details</a> |
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id_Fungicide">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,38 +22,24 @@ namespace PomponetWebsite.Controllers
         // GET: Types_Fungicides
         public async Task<IActionResult> Index(string buscar, string filtro)
         {
-            IQueryable<Types_Fungicides> types_fungicides = _context.Types_Fungicides;
-
+            var types_fungicides = from type_fungicide in _context.Types_Fungicides select type_fungicide;
             if (!String.IsNullOrEmpty(buscar))
             {
-                types_fungicides = types_fungicides.Where(s => s.Type_Fungicide.Contains(buscar));
+                types_fungicides = types_fungicides.Where(s => s.Type_Fungicide!.Contains(buscar));
             }
-
             ViewData["FiltroType_Fungicide"] = String.IsNullOrEmpty(filtro) ? "Type_FungicideDescendente" : "";
-            ViewData["FiltroId_Funicides"] = filtro == "Id_FunicidesAscendente" ? "Id_FunicidesDescendente" : "Id_FunicidesAscendente";
 
             switch (filtro)
             {
                 case "Type_FungicideDescendente":
-                    types_fungicides = types_fungicides.OrderByDescending(tf => tf.Type_Fungicide);
-                    break;
-                case "Id_FunicidesDescendente":
-                    types_fungicides = types_fungicides.OrderByDescending(tf => tf.Id_Funicides);
-                    break;
-                case "Id_FunicidesAscendente":
-                    types_fungicides = types_fungicides.OrderBy(tf => tf.Id_Funicides);
+                    types_fungicides = types_fungicides.OrderByDescending(types_fungicides => types_fungicides.Type_Fungicide);
                     break;
                 default:
-                    types_fungicides = types_fungicides.OrderBy(tf => tf.Type_Fungicide);
+                    types_fungicides = types_fungicides.OrderBy(types_fungicides => types_fungicides.Type_Fungicide);
                     break;
             }
-
-            types_fungicides = types_fungicides.Include(tf => tf.Fungicides);
-
             return View(await types_fungicides.ToListAsync());
         }
-
-
 
         // GET: Types_Fungicides/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -73,7 +60,6 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Types_Fungicides/Create
-        // GET: Types_Fungicides/Create
         public IActionResult Create()
         {
             ViewBag.Fungicides = new SelectList(_context.Fungicides, "Id_Fungicide", "Name_Fungicide");
@@ -81,9 +67,11 @@ namespace PomponetWebsite.Controllers
         }
 
         // POST: Types_Fungicides/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Type_Fungicide,Id_Funicides,Deleted")] Types_Fungicides types_Fungicides)
+        public async Task<IActionResult> Create([Bind("Id_Type_Fungicide,Type_Fungicide,Id_Funicides,Deleted")] Types_Fungicides types_Fungicides)
         {
             if (ModelState.IsValid)
             {
@@ -91,10 +79,8 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Fungicides = new SelectList(_context.Fungicides, "Id_Fungicide", "Name_Fungicide", types_Fungicides.Id_Funicides);
             return View(types_Fungicides);
         }
-
 
         // GET: Types_Fungicides/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -109,10 +95,12 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Fungicides = new SelectList(_context.Fungicides, "Id_Fungicide", "Name_Fungicide", types_Fungicides.Id_Funicides);
             return View(types_Fungicides);
         }
 
+        // POST: Types_Fungicides/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Type_Fungicide,Type_Fungicide,Id_Funicides,Deleted")] Types_Fungicides types_Fungicides)
@@ -163,15 +151,15 @@ namespace PomponetWebsite.Controllers
             return View(types_Fungicides);
         }
 
+        // POST: Types_Fungicides/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var types_fungicides = await _context.Types_Fungicides.FindAsync(id);
-            if (types_fungicides != null)
+            var types_Fungicides = await _context.Types_Fungicides.FindAsync(id);
+            if (types_Fungicides != null)
             {
-                types_fungicides.Deleted = true;
-                _context.Types_Fungicides.Update(types_fungicides);
+                _context.Types_Fungicides.Remove(types_Fungicides);
             }
 
             await _context.SaveChangesAsync();

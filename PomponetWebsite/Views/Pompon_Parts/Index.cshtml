@@ -9,42 +9,38 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-
-<form asp-controller="Pompon_Parts" asp-action="Index">
+<form asp-controller="Pompon_Parts" asp-action="Index" method="get">
     <p>
         Buscar: <input type="text" name="buscar" class="form-text" />
         <input type="submit" value="Buscar" class="btn btn-sm btn-dark" />
+        @if (!string.IsNullOrEmpty(ViewData["Error"] as string))
+        {
+            <span class="text-danger">@ViewData["Error"]</span>
+        }
     </p>
 </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-filtro="@ViewData["FiltroPart"]">
-                    @Html.DisplayNameFor(model => model.Part)
-                </a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Deleted)
+                @Html.DisplayNameFor(model => model.First().Part)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Part)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Part)
+                </td>
+                <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id_Pompon_Part">Edit</a> |
                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id_Pompon_Part">Details</a> |
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id_Pompon_Part">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

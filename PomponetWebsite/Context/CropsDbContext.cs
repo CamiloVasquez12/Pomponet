@@ -1,49 +1,60 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PomponetWebsite.Models;
+using System;
 
 namespace PomponetWebsite.Context
 {
     public class CropsDbContext : DbContext
     {
-        public CropsDbContext(DbContextOptions<CropsDbContext> options) : base(options) 
+        public CropsDbContext(DbContextOptions<CropsDbContext> options) : base(options)
         {
-
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Crops>()
-                .HasKey(Crops => Crops.Id_Crop);
-            modelBuilder.Entity<Achievements>()
-              .HasKey(Achievements => Achievements.Id_Achievement);
-            modelBuilder.Entity<AplicationTools>()
-              .HasKey(AplicationTools => AplicationTools.Id_AplicationTool);
-            modelBuilder.Entity<Epps>()
-             .HasKey(Epps => Epps.Id_Epp);
-            modelBuilder.Entity<Fungicide_X_Pompon_Part>()
-              .HasKey(Fungicide_X_Pompon_Part => Fungicide_X_Pompon_Part.Id_Fungicide_X_Pompon_Part);
-            modelBuilder.Entity<Fungicides>()
-               .HasKey(Fungicides => Fungicides.Id_Fungicide);
-            modelBuilder.Entity<Inventories>()
-              .HasKey(Inventories => Inventories.Id_Inventory);
-            modelBuilder.Entity<Money>()
-              .HasKey(Money => Money.Id_Money);
-            modelBuilder.Entity<Pest_X_Fungicide>()
-              .HasKey(Pest_X_Fungicide => Pest_X_Fungicide.Id_Pest_X_Fungicide);
-            modelBuilder.Entity<Player_Achievements>()
-               .HasKey(Player_Achievements => Player_Achievements.Id_Player_Achievement);
-            modelBuilder.Entity<People>()
-             .HasKey(People => People.Id_Person);
-            modelBuilder.Entity<Players>()
-               .HasKey(Players => Players.Id_Player);
-            modelBuilder.Entity<Pests>()
-              .HasKey(Pests => Pests.Id_Pest);
+            modelBuilder.Entity<Crops>().HasKey(c => c.Id_Crop);
+            modelBuilder.Entity<Achievements>().HasKey(a => a.Id_Achievement);
+            modelBuilder.Entity<AplicationTools>().HasKey(a => a.Id_AplicationTool);
+            modelBuilder.Entity<Epps>().HasKey(e => e.Id_Epp);
+            modelBuilder.Entity<Fungicide_X_Pompon_Part>().HasKey(fxpp => fxpp.Id_Fungicide_X_Pompon_Part);
+            modelBuilder.Entity<Inventories>().HasKey(i => i.Id_Inventory);
+            modelBuilder.Entity<Money>().HasKey(m => m.Id_Money);
+            modelBuilder.Entity<Pest_X_Fungicide>().HasKey(pxf => pxf.Id_Pest_X_Fungicide);
+            modelBuilder.Entity<Player_Achievements>().HasKey(pa => pa.Id_Player_Achievement);
+            modelBuilder.Entity<People>().HasKey(p => p.Id_Person);
+            modelBuilder.Entity<Players>().HasKey(pl => pl.Id_Player);
+            modelBuilder.Entity<Pests>().HasKey(pe => pe.Id_Pest);
+            modelBuilder.Entity<Pompon_Parts>().HasKey(pp => pp.Id_Pompon_Part);
+            modelBuilder.Entity<Sensors>().HasKey(s => s.Id_Sensor);
+            modelBuilder.Entity<Types_Fungicides>().HasKey(tf => tf.Id_Type_Fungicide);
+
             modelBuilder.Entity<Pompon_Parts>()
-               .HasKey(Pompon_Parts => Pompon_Parts.Id_Pompon_Part);
-            modelBuilder.Entity<Sensors>()
-                .HasKey(Sensors => Sensors.Id_Sensor);
-            modelBuilder.Entity<Types_Fungicides>()
-               .HasKey(Types_Fungicides => Types_Fungicides.Id_Type_Fungicide);
+                .HasMany(p => p.Fungicide_X_Pompon_Parts)
+                .WithOne(f => f.Pompon_Parts)
+                .HasForeignKey(f => f.Id_Pompon_Part);
+
+            modelBuilder.Entity<Fungicides>()
+                .HasMany(f => f.Fungicide_X_Pompon_Parts)
+                .WithOne(p => p.Fungicides)
+                .HasForeignKey(f => f.Id_Fungicide);
+            modelBuilder.Entity<Crops>()
+               .HasMany(c => c.Fungicides)
+               .WithOne(f => f.Crops)
+               .HasForeignKey(f => f.Id_crop);
+            modelBuilder.Entity<People>()
+              .HasMany(p => p.Inventories)
+              .WithOne(f => f.People)
+              .HasForeignKey(f => f.Id_Person);
+            modelBuilder.Entity<AplicationTools>()
+              .HasMany(a => a.Inventories)
+              .WithOne(f => f.Aplication_Tools)
+              .HasForeignKey(f => f.Id_Tool);
+            modelBuilder.Entity<Epps>()
+              .HasMany(e => e.Inventories)
+              .WithOne(f => f.Epps)
+              .HasForeignKey(f => f.Id_Epp);
         }
+
         public DbSet<Crops> Crop { get; set; }
         public DbSet<Achievements> Achievements { get; set; }
         public DbSet<AplicationTools> AplicationTools { get; set; }
@@ -61,6 +72,10 @@ namespace PomponetWebsite.Context
         public DbSet<Players> Players { get; set; }
         public DbSet<People> People { get; set; }
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                          .EnableSensitiveDataLogging();
+        }
     }
 }

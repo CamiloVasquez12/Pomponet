@@ -20,36 +20,41 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Inventories
-        public async Task<IActionResult> Index(int? buscar, string filtro)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var inventories = from inventorie in _context.Inventories select inventorie;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["PersonSortParm"] = string.IsNullOrEmpty(sortOrder) ? "person_desc" : "";
+            ViewData["ToolSortParm"] = sortOrder == "tool" ? "tool_desc" : "tool";
+            ViewData["EppSortParm"] = sortOrder == "epp" ? "epp_desc" : "epp";
+            ViewData["NumberInventorieSortParm"] = sortOrder == "number_inventorie" ? "number_inventorie_desc" : "number_inventorie";
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            var query = _context.Inventories
+                                .Include(f => f.People)
+                                .Include(f => f.Aplication_Tools)
+                                .Include(f => f.Epps)
+                                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                string buscarStr = buscar.Value.ToString();
-                inventories = inventories.Where(s => s.Number_Inventorie.ToString().Contains(buscarStr));
+                query = query.Where(f => f.People.Names.Contains(searchString) ||
+                                         f.Aplication_Tools.Tool.Contains(searchString) ||
+                                         f.Epps.Name_Epp.Contains(searchString));
             }
 
-            ViewData["FiltroNumber_Inventorie"] = String.IsNullOrEmpty(filtro) ? "Number_InventorieDescendente" : "";
-            ViewData["FiltroId_Person"] = filtro == "Id_PersonAscendente" ? "Id_PersonDescendente" : "Id_PersonAscendente";
-
-            switch (filtro)
+            query = sortOrder switch
             {
-                case "Number_InventorieDescendente":
-                    inventories = inventories.OrderByDescending(inventorie => inventorie.Number_Inventorie);
-                    break;
-                case "Id_PersonDescendente":
-                    inventories = inventories.OrderByDescending(inventorie => inventorie.Id_Person);
-                    break;
-                case "Id_PersonAscendente":
-                    inventories = inventories.OrderBy(inventorie => inventorie.Id_Person);
-                    break;
-                default:
-                    inventories = inventories.OrderBy(inventorie => inventorie.Number_Inventorie);
-                    break;
-            }
+                "person_desc" => query.OrderByDescending(f => f.People.Names),
+                "tool" => query.OrderBy(f => f.Aplication_Tools.Tool),
+                "tool_desc" => query.OrderByDescending(f => f.Aplication_Tools.Tool),
+                "epp" => query.OrderBy(f => f.Epps.Name_Epp),
+                "epp_desc" => query.OrderByDescending(f => f.Epps.Name_Epp),
+                "number_inventorie" => query.OrderBy(f => f.Number_Inventorie),
+                "number_inventorie_desc" => query.OrderByDescending(f => f.Number_Inventorie),
+                _ => query.OrderBy(f => f.People.Names),
+            };
 
-            return View(await inventories.ToListAsync());
+            var model = await query.ToListAsync();
+            return View(model);
         }
 
         // GET: Inventories/Details/5
@@ -61,7 +66,10 @@ namespace PomponetWebsite.Controllers
             }
 
             var inventories = await _context.Inventories
-                .FirstOrDefaultAsync(m => m.Id_Inventory == id);
+                                            .Include(f => f.People)
+                                            .Include(f => f.Aplication_Tools)
+                                            .Include(f => f.Epps)
+                                            .FirstOrDefaultAsync(m => m.Id_Inventory == id);
             if (inventories == null)
             {
                 return NotFound();
@@ -71,8 +79,21 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Inventories/Create
-        public IActionResult Create()
+        // GET: Inventories/Create
+        public async Task<IActionResult> Create()
         {
+            var people = await _context.People.ToListAsync();
+            var aplicationtools = await _context.AplicationTools.ToListAsync();
+            var epps = await _context.Epps.ToListAsync();
+
+            if (people == null || aplicationtools == null || epps == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Person"] = new SelectList(people, "Id_Person", "Names");
+            ViewData["Id_AplicationTool"] = new SelectList(aplicationtools, "Id_AplicationTool", "Tool");
+            ViewData["Id_Epp"] = new SelectList(epps, "Id_Epp", "Name_Epp");
             return View();
         }
 
@@ -89,6 +110,18 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var people = await _context.People.ToListAsync();
+            var aplicationtools = await _context.AplicationTools.ToListAsync();
+            var epps = await _context.Epps.ToListAsync();
+
+            if (people == null || aplicationtools == null || epps == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Person"] = new SelectList(people, "Id_Person", "Names", inventories.Id_Person);
+            ViewData["Id_AplicationTool"] = new SelectList(aplicationtools, "Id_AplicationTool", "Tool", inventories.Id_Tool);
+            ViewData["Id_Epp"] = new SelectList(epps, "Id_Epp", "Name_Epp", inventories.Id_Epp);
             return View(inventories);
         }
 
@@ -100,17 +133,23 @@ namespace PomponetWebsite.Controllers
                 return NotFound();
             }
 
-            var inventories = await _context.Inventories.FindAsync(id);
+            var inventories = await _context.Inventories
+                                            .Include(f => f.People)
+                                            .Include(f => f.Aplication_Tools)
+                                            .Include(f => f.Epps)
+                                            .FirstOrDefaultAsync(m => m.Id_Inventory == id);
             if (inventories == null)
             {
                 return NotFound();
             }
+
+            ViewData["Id_Person"] = new SelectList(_context.People, "Id_Person", "Names", inventories.Id_Person);
+            ViewData["Id_AplicationTool"] = new SelectList(_context.AplicationTools, "Id_AplicationTool", "Tool", inventories.Id_Tool);
+            ViewData["Id_Epp"] = new SelectList(_context.Epps, "Id_Epp", "Name_Epp", inventories.Id_Epp);
             return View(inventories);
         }
 
         // POST: Inventories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Inventory,Number_Inventorie,Id_Person,Id_Tool,Id_Epp,Deleted")] Inventories inventories)
@@ -140,6 +179,15 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            var people = await _context.People.ToListAsync();
+            var aplicationTools = await _context.AplicationTools.ToListAsync();
+            var epps = await _context.Epps.ToListAsync();
+
+            ViewData["Id_Person"] = new SelectList(people, "Id_Person", "Names", inventories.Id_Person);
+            ViewData["Id_AplicationTool"] = new SelectList(aplicationTools, "Id_AplicationTool", "Tool", inventories.Id_Tool);
+            ViewData["Id_Epp"] = new SelectList(epps, "Id_Epp", "Name_Epp", inventories.Id_Epp);
+
             return View(inventories);
         }
 
@@ -152,7 +200,10 @@ namespace PomponetWebsite.Controllers
             }
 
             var inventories = await _context.Inventories
-                .FirstOrDefaultAsync(m => m.Id_Inventory == id);
+                                            .Include(f => f.People)
+                                            .Include(f => f.Aplication_Tools)
+                                            .Include(f => f.Epps)
+                                            .FirstOrDefaultAsync(m => m.Id_Inventory == id);
             if (inventories == null)
             {
                 return NotFound();

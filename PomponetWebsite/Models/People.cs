@@ -11,5 +11,10 @@ namespace PomponetWebsite.Models
         public required string Password { get; set; }
         public required int Age { get; set; }
         public bool Deleted { get; set; }
+        public ICollection<Inventories> Inventories { get; set; }
+        public People()
+        {
+            Inventories = new List<Inventories>();
+        }
     }
 }

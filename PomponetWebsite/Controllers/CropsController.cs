@@ -21,11 +21,12 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Crops
+        // GET: Crops
         public async Task<IActionResult> Index(int? buscar, string filtro)
         {
-            var crops = from crop in _context.Crop select crop;
+            var crops = _context.Crop.Include(c => c.Players).AsQueryable();
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            if (buscar.HasValue && buscar.Value != 0)
             {
                 string buscarStr = buscar.Value.ToString();
                 crops = crops.Where(s => s.Crop_Number.ToString().Contains(buscarStr));
@@ -62,6 +63,7 @@ namespace PomponetWebsite.Controllers
             }
 
             var crops = await _context.Crop
+                .Include(c => c.Players)
                 .FirstOrDefaultAsync(m => m.Id_Crop == id);
             if (crops == null)
             {
@@ -72,14 +74,14 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Crops/Create
-        public IActionResult Create()
+        // GET: Crops/Create
+        public async Task<IActionResult> Create()
         {
+            ViewData["Id_Player"] = new SelectList(await _context.Players.ToListAsync(), "Id_Player", "Id_Player");
             return View();
         }
 
         // POST: Crops/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Crop,Crop_Number,Id_Player,Deleted")] Crops crops)
@@ -90,6 +92,7 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_Player"] = new SelectList(await _context.Players.ToListAsync(), "Id_Player", "Id_Player", crops.Id_Player);
             return View(crops);
         }
 
@@ -106,12 +109,11 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
+            ViewData["Id_Player"] = new SelectList(await _context.Players.ToListAsync(), "Id_Player", "Id_Player", crops.Id_Player);
             return View(crops);
         }
 
         // POST: Crops/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Crop,Crop_Number,Id_Player,Deleted")] Crops crops)
@@ -141,6 +143,7 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_Player"] = new SelectList(await _context.Players.ToListAsync(), "Id_Player", "Id_Player", crops.Id_Player);
             return View(crops);
         }
 

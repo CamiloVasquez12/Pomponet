@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,36 +21,33 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Fungicide_X_Pompon_Part
-        public async Task<IActionResult> Index(int? buscar, string filtro)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var fungicide_x_pompon_part = from fungicide_x_pompon_par in _context.Fungicide_X_Pompon_Part select fungicide_x_pompon_par;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["PartSortParm"] = string.IsNullOrEmpty(sortOrder) ? "part_desc" : "";
+            ViewData["FungicideSortParm"] = sortOrder == "fungicide" ? "fungicide_desc" : "fungicide";
 
-            if (buscar.HasValue && buscar.Value != 0)  // Validación para evitar buscar con valor 0 o nulo
+            var query = _context.Fungicide_X_Pompon_Part
+                                .Include(f => f.Pompon_Parts)
+                                .Include(f => f.Fungicides)
+                                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                string buscarStr = buscar.Value.ToString();
-                fungicide_x_pompon_part = fungicide_x_pompon_part.Where(s => s.Id_Pompon_Part.ToString().Contains(buscarStr));
+                query = query.Where(f => f.Pompon_Parts.Part.Contains(searchString) ||
+                                         f.Fungicides.Name_Fungicide.Contains(searchString));
             }
 
-            ViewData["FiltroId_Pompon_Part"] = String.IsNullOrEmpty(filtro) ? "Id_Pompon_PartDescendente" : "";
-            ViewData["FiltroId_Fungicide"] = filtro == "Id_FungicideAscendente" ? "Id_FungicideDescendente" : "Id_FungicideAscendente";
-
-            switch (filtro)
+            query = sortOrder switch
             {
-                case "Id_Pompon_PartDescendente":
-                    fungicide_x_pompon_part = fungicide_x_pompon_part.OrderByDescending(fungicide_x_pompon_par => fungicide_x_pompon_par.Id_Pompon_Part);
-                    break;
-                case "Id_FungicideDescendente":
-                    fungicide_x_pompon_part = fungicide_x_pompon_part.OrderByDescending(fungicide_x_pompon_par => fungicide_x_pompon_par.Id_Fungicide);
-                    break;
-                case "Id_FungicideAscendente":
-                    fungicide_x_pompon_part = fungicide_x_pompon_part.OrderBy(fungicide_x_pompon_par => fungicide_x_pompon_par.Id_Fungicide);
-                    break;
-                default:
-                    fungicide_x_pompon_part = fungicide_x_pompon_part.OrderBy(fungicide_x_pompon_par => fungicide_x_pompon_par.Id_Pompon_Part);
-                    break;
-            }
+                "part_desc" => query.OrderByDescending(f => f.Pompon_Parts.Part),
+                "fungicide" => query.OrderBy(f => f.Fungicides.Name_Fungicide),
+                "fungicide_desc" => query.OrderByDescending(f => f.Fungicides.Name_Fungicide),
+                _ => query.OrderBy(f => f.Pompon_Parts.Part),
+            };
 
-            return View(await fungicide_x_pompon_part.ToListAsync());
+            var model = await query.ToListAsync();
+            return View(model);
         }
 
         // GET: Fungicide_X_Pompon_Part/Details/5
@@ -71,14 +69,22 @@ namespace PomponetWebsite.Controllers
         }
 
         // GET: Fungicide_X_Pompon_Part/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var pomponParts = await _context.Pompon_Parts.ToListAsync();
+            var fungicides = await _context.Fungicides.ToListAsync();
+
+            if (pomponParts == null || fungicides == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Pompon_Part"] = new SelectList(pomponParts, "Id_Pompon_Part", "Part");
+            ViewData["Id_Fungicide"] = new SelectList(fungicides, "Id_Fungicide", "Name_Fungicide");
             return View();
         }
 
         // POST: Fungicide_X_Pompon_Part/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id_Fungicide_X_Pompon_Part,Id_Pompon_Part,Id_Fungicide,Deleted")] Fungicide_X_Pompon_Part fungicide_X_Pompon_Part)
@@ -89,9 +95,21 @@ namespace PomponetWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var pomponParts = await _context.Pompon_Parts.ToListAsync();
+            var fungicides = await _context.Fungicides.ToListAsync();
+
+            if (pomponParts == null || fungicides == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Id_Pompon_Part"] = new SelectList(pomponParts, "Id_Pompon_Part", "Part", fungicide_X_Pompon_Part.Id_Pompon_Part);
+            ViewData["Id_Fungicide"] = new SelectList(fungicides, "Id_Fungicide", "Name_Fungicide", fungicide_X_Pompon_Part.Id_Fungicide);
             return View(fungicide_X_Pompon_Part);
         }
 
+        // GET: Fungicide_X_Pompon_Part/Edit/5
         // GET: Fungicide_X_Pompon_Part/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -105,15 +123,17 @@ namespace PomponetWebsite.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["Id_Pompon_Part"] = new SelectList(_context.Pompon_Parts, "Id_Pompon_Part", "Part", fungicide_X_Pompon_Part.Id_Pompon_Part);
+            ViewData["Id_Fungicide"] = new SelectList(_context.Fungicides, "Id_Fungicide", "Name_Fungicide", fungicide_X_Pompon_Part.Id_Fungicide);
+
             return View(fungicide_X_Pompon_Part);
         }
 
         // POST: Fungicide_X_Pompon_Part/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Fungicide_X_Pompon_Part,Id_Pompon_Part,Id_Fungicide,Deleted")] Fungicide_X_Pompon_Part fungicide_X_Pompon_Part)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Fungicide_X_Pompon_Part,Id_Pompon_Part,Id_Fungicide")] Fungicide_X_Pompon_Part fungicide_X_Pompon_Part)
         {
             if (id != fungicide_X_Pompon_Part.Id_Fungicide_X_Pompon_Part)
             {
@@ -140,6 +160,10 @@ namespace PomponetWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Id_Pompon_Part"] = new SelectList(_context.Pompon_Parts, "Id_Pompon_Part", "Part", fungicide_X_Pompon_Part.Id_Pompon_Part);
+            ViewData["Id_Fungicide"] = new SelectList(_context.Fungicides, "Id_Fungicide", "Name_Fungicide", fungicide_X_Pompon_Part.Id_Fungicide);
+
             return View(fungicide_X_Pompon_Part);
         }
 
@@ -169,8 +193,8 @@ namespace PomponetWebsite.Controllers
             var fungicide_x_pompon_par = await _context.Fungicide_X_Pompon_Part.FindAsync(id);
             if (fungicide_x_pompon_par != null)
             {
-                fungicide_x_pompon_par.Deleted = true; // Marca el registro como eliminado
-                _context.Fungicide_X_Pompon_Part.Update(fungicide_x_pompon_par); // Actualiza el registro en el contexto
+                fungicide_x_pompon_par.Deleted = true;
+                _context.Fungicide_X_Pompon_Part.Update(fungicide_x_pompon_par);
             }
 
             await _context.SaveChangesAsync();
